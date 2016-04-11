@@ -2,6 +2,7 @@ package initgo
 
 import (
 	"errors"
+	"fmt"
 )
 
 // Get config file name
@@ -55,4 +56,20 @@ func (config *Config) GetValue(section, key string) (string, error) {
 	}
 
 	return res, nil
+}
+
+// Print value
+func (config *Config) PrintValue(section string) string {
+	var currentSection string = section
+	var printValue string
+
+	printValue += fmt.Sprintf("========== [%s] section ========== \n\n", section)
+
+	for idx, value := range config.config[currentSection].data {
+		printValue += fmt.Sprintf("%s : %s\n", idx, value)
+	}
+
+	printValue += fmt.Sprintln("==================================")
+
+	return printValue
 }
