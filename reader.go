@@ -39,16 +39,20 @@ func (config *Config) GetValue(section, key string) (string, error) {
 	var processing bool = true
 	var currentSection string = section
 	var res string
+	i := 0
 
 	for processing && len(currentSection) > 0 {
 		res = config.config[currentSection].data[key]
-
 		if len(res) > 0 {
 			processing = false
 			break
 		} else {
 			currentSection = config.config[currentSection].inheritSection
+			if i > 1 {
+				break
+			}
 		}
+		i++
 	}
 
 	if len(res) == 0 {
